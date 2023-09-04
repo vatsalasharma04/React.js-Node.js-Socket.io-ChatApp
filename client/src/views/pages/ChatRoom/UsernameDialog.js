@@ -24,7 +24,7 @@ function UsernameDialog({ username, setUsername }) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setUsername(user)}>Enter Chat Room</Button>
+        <Button onClick={() => setUsername(user)}>Enter Chat Box</Button>
       </DialogActions>
     </Dialog>
   );

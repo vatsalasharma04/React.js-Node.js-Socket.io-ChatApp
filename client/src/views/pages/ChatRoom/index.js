@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { Stack, Grid, Box, TextField, Button, Typography } from "@mui/material";
 import io from "socket.io-client";
 import { format } from "date-fns";
-
+import chat from '../../../../src/chat.png';
 import UsernameDialog from "./UsernameDialog";
+import { lightBlue } from "@mui/material/colors";
 
 const socket = io("http://localhost:5000");
 
-function ChatRoom() {
+function ChatApp() {
   const scrollRef = useRef();
 
   const [username, setUsername] = useState(null);
@@ -57,9 +58,30 @@ function ChatRoom() {
 
   // Welcome User message
   const welcomeMessageView = () => (
-    <Grid container item padding={3}>
-      <Grid item>Welcome {username}</Grid>
+    <Grid container item padding={3} 
+    sx={(theme)=>({
+      
+      border:'1px solid black',
+      backgroundColor:'#2c7DA0',
+      color:'white'
+    })}
+    ><img src={chat} width='200px' height='50px'></img>
+      
+      <Grid item
+      sx={(theme)=>({
+      
+        fontSize:'22px',
+        color:'white',
+        marginLeft:'40px',
+        marginTop:'12px'
+        
+      })}
+      >
+        
+        Welcome {username}</Grid>
+      
     </Grid>
+    
   );
 
   // Messages View
@@ -98,7 +120,8 @@ function ChatRoom() {
                   backgroundColor: self
                     ? theme.palette.primary.light
                     : theme.palette.grey["400"],
-                  borderRadius: theme.shape.borderRadius,
+                    fontSize:'18px'
+                  // borderRadius: theme.shape.borderRadius,
                 })}
                 px={1}
               >
@@ -130,11 +153,13 @@ function ChatRoom() {
           variant="standard"
           fullWidth
           value={message}
+          placeholder="Write your message here..."
           onChange={(e) => setMessage(e.target.value)}
           sx={(theme) => ({
-            border: "1px solid gray",
-            borderRadius: theme.shape.borderRadius,
+            border: "3px solid black",
+            borderRadius: 0,
             paddingLeft: 2,
+            fontFamily:'Times New Roman'
           })}
           InputProps={{
             disableUnderline: true,
@@ -142,7 +167,12 @@ function ChatRoom() {
         />
       </Grid>
       <Grid item>
-        <Button type="submit">Send</Button>
+        <Button type="submit"
+        sx={(theme)=>({
+          border:'1px solid black',
+          backgroundColor:'#2c7DA0',
+          color:'white'
+        })}>Send</Button>
       </Grid>
     </Grid>
   );
@@ -153,7 +183,7 @@ function ChatRoom() {
         container
         direction="column"
         alignItems="center"
-        style={{ height: "100vh", backgroundColor: "#888", padding: 5 }}
+        style={{ height: "100vh", backgroundColor: "#012a4a", padding: 5 }}
       >
         <UsernameDialog username={username} setUsername={setUsername} />
 
@@ -163,7 +193,10 @@ function ChatRoom() {
             backgroundColor: "#fff",
             height: "80vh",
             width: "40%",
-            borderRadius: theme.shape.borderRadius,
+            marginTop:"50px",
+            borderRadius: "0px",
+            borderColor: "black",
+            border: "10px solid black",
           })}
         >
           {welcomeMessageView()}
@@ -177,4 +210,4 @@ function ChatRoom() {
   );
 }
 
-export default ChatRoom;
+export default ChatApp;
